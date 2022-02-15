@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.4 (15/5/16)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com) with extensive modifications by
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twoside,twocolumn]{article}
+
+\usepackage{blindtext} % Package to generate dummy text throughout this template 
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english]{babel} % Language hyphenation and typographical rules
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{noitemsep} % Make itemize lists more compact
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{Java Sockets to Deliver Quotes $\bullet$ February 2022} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+\usepackage{titling} % Customizing the title section
+
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{biblatex} %Imports biblatex package
+\usepackage{csquotes}
+\addbibresource{wilt.bib} %Import the bibliography file
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\setlength{\droptitle}{-4\baselineskip} % Move the title up
+
+%\pretitle{\begin{center}\Huge\bfseries} % Article title formatting
+%\posttitle{\end{center}} % Article title closing formatting
+\title{Using Java Sockets to Deliver Quotes} % Article title
+\author{%
+\textsc{Henry Wilt} \\[1ex]%\thanks{A thank you or further information}  % Your name
+\normalsize Ursinus College \\ % Your institution
+\normalsize \href{mailto:hewilt@ursinus.edu}{hewilt@ursinus.edu} % Your email address
+%\and % Uncomment if 2 authors are required, duplicate these 4 lines if more
+%\textsc{Jane Smith}\thanks{Corresponding author} \\[1ex] % Second author's name
+%\normalsize University of Utah \\ % Second author's institution
+%\normalsize \href{mailto:jane@smith.com}{jane@smith.com} % Second author's email address
+}
+\date{\today} % Leave empty to omit a date
+\renewcommand{\maketitlehookd}{%
+\begin{abstract}
+\noindent The goal for the assignment was to use a linux environment and modify the two class, DataClient and DataServer, from the Textbook figures 3.27 and 3.28 \cite{textbook}. We should change the two classes to have the DataServer respond to the DataClient with Quotes instead of the current date and time. There is another file with all the quotes that the server can respond to the Client. With the the Server reading them in at Startup or reading them during run time. The Client has to take in a command line argument for the number of quotes the user wants. 
+\end{abstract}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+% Print the title
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\section{About the Project}
+
+\lettrine[nindent=0em,lines=2]{T}here are two Java classes in the project, the QuoteServer and the QuoteClient \cite{assignmentgithub}. We will take a look into the QuoteClient first as that is what the user communicates with, when you run the file, you have the option to put in the number of quotes you want returned back with the command line. It will then try to connect to the server using Sockets, for our example this just means connecting to local host. It will then send the number of quotes the user wants to the Server and if the user did not specify then it will send an $-1$ to represent only sending back one random quote. QuoteClient will then wait for the server to respond with the Quotes that was asked for and print them out to the terminal. and will finish off with closing the socket and ending the program. \par As we start to talk about the Server side of the project, there is the file which stores all the quotes titled "quotes.txt" and the java class called "QuoteServer.java". These two files make up the Server aspect of the project. In the text file, there are $99$ quotes in plain text format delimited by newline characters. In the QuoteServer file, there are two methods: getQuotes() and main(). For the getQuotes method, it will return an String array of the quotes from the file. The method is called right when the Server starts up to save time when the Client calls the server. In the main method, it will first call the getQuotes method and then for forever will wait to accept requests from the Client. If it gets a request from the Client, it will read in the number of quotes the Client wants and then check if the number is $-1$ if the user did not submit any number to the Client. If this is true then the server will send back only one random quote. If not, then it will loop through the number of quotes to send back and create a new random number that will choose from the array and send back. After, it goes through the loop it will keep waiting to accept another socket request.
+
+%------------------------------------------------
+
+\section{Discussion on Accessing Quotes}
+There are two different ways of accessing the Quotes for the Server. Both ways has them being stored in a file to be read in a certain times but one way is being read in on startup and being stored in memory and the other is randomly accessing from the file during the run time whenever the server gets a request. In my implementation, I had the quotes being read in on startup of the server as my thought process was that it would save time when the client requests a new quote. The advantage is saving time but a big disadvantage is space, as quotes increase the space complexity increases as well. As this is only an small example for a class, there is not that big of a disadvantage withe space complexity. If this was implemented on a larger internet environment, with many thousands of quotes, then the amount of space used is too massive for the program to actually run. This can be fixed by randomly accessing the file during the request from a Client. This will save on storing all the quotes in an array. But, an disadvantage is time complexity as it is very time consuming to access a file multiple times. It will also use a lot of resources to move the file in and out memory to keep reading it. There are always trade-offs but it is better to implement accessing the file once when in smaller environment which will be used for testing or learning. While it is better off to implement the randomly accessing when in larger environments to keep the space complexity small as computers are fast enough nowadays to move files into memory and open them without losing a lot of time.
+
+
+%------------------------------------------------
+
+\section{Conclusion}
+Using Java sockets to connect to a server that will respond with Quotes was interesting. I can see the connection between networks and the operating system are very similar. As the operating system is just a bunch of "local host" networks with other components in the machine.
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+
+\printbibliography %Prints bibliography
+
+\end{document}

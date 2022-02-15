@@ -1,9 +1,15 @@
+/**
+ * @author Henry Wilt
+ * @version 1.0
+ * Class: CS376, Hw2
+ */
+
 import java.net.*;
 import java.io.*;
 
 public class QuoteClient{
     public static void main(String[] args) {
-        int num_quotes = -1; 
+        int num_quotes = -1; // -1 means random quote
         if (args.length > 0) {
             num_quotes = Integer.parseInt(args[0]);
         }
@@ -16,6 +22,7 @@ public class QuoteClient{
             PrintWriter pout = new PrintWriter(sock.getOutputStream(), true);
             pout.println(num_quotes);
 
+            /* receives the quotes from the server */
             InputStream in = sock.getInputStream();
             BufferedReader bin = new BufferedReader(new InputStreamReader(in));
             

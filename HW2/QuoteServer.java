@@ -1,9 +1,16 @@
+/**
+ * @author Henry Wilt
+ * @version 1.0
+ * Class: CS376, Hw2
+ */
+
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
 
 public class QuoteServer {
 
+    // The number of quotes in the file
     private static final int NUM_OF_QUOTES = 99;
 
 
@@ -46,14 +53,17 @@ public class QuoteServer {
                 String line;
                 if ((line = bin.readLine()) != null) {
                     int num_quotes = Integer.parseInt(line);
+                    /* If the number of quotes is -1 then the client is requesting a random quote */
                     if (num_quotes == -1) {
+                        // Generate a random number between 0 and the total number of quotes
                         int random = (int)(Math.random() * quotes.length);
                         pout.println(quotes[random]);
                     }
                     else {
                         for (int i = 0; i < num_quotes; i++) {
+                            // Generate a random number between 0 and the total number of quotes
                             int random = (int)(Math.random() * quotes.length);
-                            pout.println(quotes[random]);
+                            pout.println(quotes[random]); // sends the quotes back to the client
                         }
                     }
                 }
