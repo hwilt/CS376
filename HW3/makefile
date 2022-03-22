@@ -11,7 +11,6 @@ CLASSES = \
 default: compile 
 
 compile: $(CLASSES:.java=.class)
-	@echo "Compiling..."
 
 clean: 
 	@echo "Cleaning..."
