@@ -45,6 +45,12 @@ public class Driver {
             typeOfSchedule = args[1];
             ArrayList<int[]> config = readInConfig(configFileName);
             CPU cpu = new CPU(config);
+
+            System.out.println("Scheduling Algorithm: " + typeOfSchedule);
+            System.out.println("Total " + config.size() + " tasks are read from \"" + configFileName + "\". Press 'enter' to start...");
+            Scanner scanner = new Scanner(System.in); // For reading the input from the keyboard
+            scanner.nextLine();                       // Read the input from the keyboard
+
             if (typeOfSchedule.equals("RR") && args.length == 3) {
                 timeQuantum = Integer.parseInt(args[2]);
                 cpu.setQuantumTime(timeQuantum);
@@ -58,7 +64,7 @@ public class Driver {
             }
         }
         else{
-            System.out.println("Usage: java Driver <config file> <RR> <TimeQuantum>");
+            System.out.println("Usage: java Driver <config file> <[FCFS,RR,SJF]> <TimeQuantum(if RR)>");
         }
         
     }
