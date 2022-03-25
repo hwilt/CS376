@@ -248,8 +248,45 @@ public class CPU{
      * 
      */
     public void roundRobin(){
-        
-
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        int[] burstOG = Arrays.copyOf(burst, burst.length);
+        boolean[] started = new boolean[burst.length];
+        Arrays.fill(started, Boolean.FALSE);
+        boolean isRunning = true;
+        int currentProcess = 0;
+        int timeSpent = 0;
+        while (isRunning){
+            for (int i = 1; i < process.length; i++){
+                if (arrival[i] <= currentTime && burst[i] != 0 && !queue.contains(i) && !started[i]){
+                    queue.add(i);
+                }
+            }
+            if (burst[currentProcess] > 0 && timeSpent < quantumTime){
+                timeSpent++;
+                burst[currentProcess]--;
+                System.out.println("<System time " + currentTime + "> process " + process[currentProcess] + " is running");
+                currentTime++;
+                if (burst[currentProcess] == 0){
+                    turnaround[currentProcess] = currentTime - arrival[currentProcess];
+                    wait[currentProcess] = turnaround[currentProcess] - burstOG[currentProcess];
+                    System.out.println("<System time " + currentTime + "> process " + process[currentProcess] + " is finished.......");
+                }
+            }
+            else{
+                queue.add(currentProcess);
+                currentProcess = queue.poll();
+                if (!started[currentProcess]){
+                    response[currentProcess] = currentTime - arrival[currentProcess];
+                    started[currentProcess] = true;
+                }  
+                timeSpent = 0;
+            }
+            if (getMax(burst) == 0){
+                isRunning = false;
+            }
+        }
+        System.out.println("<System time " + currentTime + "> All processes finish");
+        printOutMetrics();
     }
 
 }
