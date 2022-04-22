@@ -3,6 +3,6 @@
  * Class: CS376, Hw4
  */
 
-public class Algorothims {
+public class Scheduler{
     
 }

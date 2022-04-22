@@ -1,6 +1,6 @@
 /**
  * @author Henry Wilt
- * Class: CS376, Hw3
+ * Class: CS376, Hw4
  */
 
 import java.io.*;
