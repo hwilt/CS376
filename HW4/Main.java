@@ -14,8 +14,8 @@ public class Main {
      * @param configFile String location of the configuration file
      * @return ArrayList<Int[]> of the configuration file
      */
-    public static ArrayList<int[]> readInConfig(String configFile) {
-        ArrayList<int[]> ret = new ArrayList<int[]>();
+    public static ArrayList<PCB> readInConfig(String configFile) {
+        ArrayList<PCB> ret = new ArrayList<PCB>();
         try {
             FileReader fr = new FileReader(configFile);
             Scanner myReader = new Scanner(fr);
@@ -23,10 +23,7 @@ public class Main {
                 String data = myReader.nextLine();
                 String[] dataArray = data.split(" ");
                 int[] dataInt = new int[dataArray.length];
-                for (int i = 0; i < dataArray.length; i++) {
-                    dataInt[i] = Integer.parseInt(dataArray[i]);
-                }
-                ret.add(dataInt);
+                ret.add(new PCB(Integer.parseInt(dataArray[0]), Integer.parseInt(dataArray[1]), Integer.parseInt(dataArray[2])));
             }
             myReader.close();
         } catch (IOException e) {
@@ -36,7 +33,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        
-        
+        // Read in the configuration file
+        ArrayList<PCB> config = readInConfig("config.txt");
+        // Create the scheduler
+        Scheduler scheduler = new Scheduler(config);
+        // Run the scheduler
+        scheduler.run();
     }
 }
