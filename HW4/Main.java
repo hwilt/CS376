@@ -21,9 +21,14 @@ public class Main {
             Scanner myReader = new Scanner(fr);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                String[] dataArray = data.split(" ");
-                int[] dataInt = new int[dataArray.length];
-                ret.add(new PCB(Integer.parseInt(dataArray[0]), Integer.parseInt(dataArray[1]), Integer.parseInt(dataArray[2])));
+                if (data.length() > 0) {
+                    String[] dataSplit = data.split(" ");
+                    int PID = Integer.parseInt(dataSplit[0]);
+                    int creationTime = Integer.parseInt(dataSplit[1]);
+                    int burstTime = Integer.parseInt(dataSplit[2]);
+                    PCB pcb = new PCB(PID, creationTime, burstTime);
+                    ret.add(pcb);
+                }
             }
             myReader.close();
         } catch (IOException e) {
@@ -33,11 +38,22 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        // Read in the configuration file
-        ArrayList<PCB> config = readInConfig("config.txt");
-        // Create the scheduler
-        Scheduler scheduler = new Scheduler(config);
-        // Run the scheduler
-        scheduler.run();
+        String configFileName = "";
+        if (args.length >= 1) {
+            configFileName = args[0];
+            // Read in the configuration file
+            ArrayList<PCB> config = readInConfig(configFileName);
+            // Create the scheduler
+            /* print out the config
+            for (PCB pcb : config) {
+                System.out.println(pcb.toString());
+            }*/
+            Scheduler scheduler = new Scheduler(config);
+            // Run the scheduler
+            scheduler.run();
+        }
+        else{
+            System.out.println("Please enter a configuration file name.\njava Main <Config file>");
+        }
     }
 }

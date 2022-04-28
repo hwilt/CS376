@@ -8,11 +8,12 @@
  * Holds the PID, creation time, burst time, wait time, turnaround time
  */
 public class PCB {
-    private int PID;
-    private int creationTime;
+    private final int PID;
+    private final int creationTime;
     private int burstTime;
     private int waitTime;
     private int turnaroundTime;
+    private byte algorithm = 0;
     private int RR8;
     private int RR16;
     private int FCFS;
@@ -57,7 +58,14 @@ public class PCB {
     public int getBurstTime() {
         return burstTime;
     }
-    
+
+    /**
+     * substractBurstTime:
+     * 
+     */
+    public void substractBurstTime() {
+        this.burstTime--;
+    }
     /**
      * getWaitTime:
      * @return waitTime
@@ -79,8 +87,8 @@ public class PCB {
      * 
      * Adds one to the wait time
      */
-    public void addWaitTime() {
-        this.waitTime++;
+    public void addWaitTime(int time) {
+        this.waitTime += time;
     }
     
 
@@ -121,4 +129,56 @@ public class PCB {
         this.FCFS++;
     }
 
+    /**
+     * getRR8:
+     * 
+     * @return RR8
+     */
+    public int getRR8() {
+        return RR8;
+    }
+
+    /**
+     * getRR16:
+     * 
+     * @return RR16
+     */
+    public int getRR16() {
+        return RR16;
+    }
+
+    /**
+     * getFCFS:
+     * 
+     * @return FCFS
+     */
+    public int getFCFS() {
+        return FCFS;
+    }
+
+    /**
+     * addAlgorithm:
+     * 
+     */
+    public void addAlgorithm(){
+        this.algorithm++;
+    }
+
+
+    /**
+     * getAlgorithm:
+     * 
+     * @return algorithm
+     */
+    public byte getAlgorithm() {
+        return algorithm;
+    }
+
+    /**
+     * toString:
+     * 
+     */
+    public String toString() {
+        return "PID: " + PID + " Creation Time: " + creationTime + " Burst Time: " + burstTime + " Wait Time: " + waitTime + " Turnaround Time: " + turnaroundTime;
+    }
 }

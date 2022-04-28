@@ -7,7 +7,8 @@ JC = javac
 CLASSES = \
 	PCB.java \
 	Main.java \
-	Algorithm.java \
+	Algorothims.java \
+	Scheduler.java
 
 default: compile 
 
